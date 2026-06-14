@@ -53,11 +53,11 @@ const initialFacts = [
 
 export default function App() {
   const [formClass, setFormClass] = useState("fact-form hidden");
-  const [facts, setFacts] = useState();
+  const [facts, setFacts] = useState(initialFacts);
 
   useEffect(() => {
     async function getFacts() {
-      const { data: facts, error } = await supabase.from("facts").select("id");
+      const { data: facts, error } = await supabase.from("facts").select("*");
       console.log(facts);
     }
     getFacts();
