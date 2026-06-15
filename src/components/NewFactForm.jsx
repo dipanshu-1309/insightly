@@ -2,10 +2,10 @@ import { useState } from "react";
 import supabase from "../supabase";
 
 export default function NewFactForm({
-  formClass,
   CATEGORIES,
   setFacts,
-  setFormClass,
+  showForm,
+  setShowForm,
 }) {
   const [text, setText] = useState("");
   const [source, setSource] = useState("");
@@ -46,13 +46,16 @@ export default function NewFactForm({
       setSource("");
       setCategory("");
       //6. close the form
-      setFormClass("fact-form hidden");
+      setShowForm(false);
     }
   }
 
   return (
     <>
-      <form className={formClass} onSubmit={handSubmit}>
+      <form
+        className={`fact-form ${!showForm ? "hidden" : ""}`}
+        onSubmit={handSubmit}
+      >
         <input
           type="text"
           placeholder="Share a fact with the world..."

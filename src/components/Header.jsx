@@ -1,18 +1,4 @@
-import { useState } from "react";
-
-export default function Header({ setFormClass }) {
-  const [buttonContent, setButtonContent] = useState("SHARE A FACT");
-
-  const hideornot = () => {
-    if (buttonContent === "SHARE A FACT") {
-      setFormClass("fact-form");
-      setButtonContent("CLOSE");
-    } else {
-      setButtonContent("SHARE A FACT");
-      setFormClass("fact-form hidden");
-    }
-  };
-
+export default function Header({ showForm, setShowForm }) {
   return (
     <>
       <header className="header">
@@ -26,8 +12,11 @@ export default function Header({ setFormClass }) {
           <h1>INSIGHTLY</h1>
         </div>
 
-        <button className="btn btn-large btn-open" onClick={hideornot}>
-          {buttonContent}
+        <button
+          className="btn btn-large btn-open"
+          onClick={() => setShowForm(!showForm)}
+        >
+          {showForm ? "CLOSE" : "SHARE A FACT"}
         </button>
       </header>
     </>

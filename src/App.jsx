@@ -19,10 +19,10 @@ const CATEGORIES = [
 ];
 
 export default function App() {
-  const [formClass, setFormClass] = useState("fact-form hidden");
   const [facts, setFacts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [currentCategory, setCurrentCategory] = useState("all");
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     async function getFacts() {
@@ -49,13 +49,12 @@ export default function App() {
 
   return (
     <>
-      <Header setFormClass={setFormClass} />
+      <Header showForm={showForm} setShowForm={setShowForm} />
       <NewFactForm
-        setFormClass={setFormClass}
-        formClass={formClass}
         CATEGORIES={CATEGORIES}
         setFacts={setFacts}
-        setFormClass={setFormClass}
+        showForm={showForm}
+        setShowForm={setShowForm}
       />
       <main className="main">
         <CategoryFilters
