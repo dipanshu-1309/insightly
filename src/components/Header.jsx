@@ -4,7 +4,7 @@ export default function Header({ setFormClass }) {
   const [buttonContent, setButtonContent] = useState("SHARE A FACT");
 
   const hideornot = () => {
-    if (buttonContent == "SHARE A FACT") {
+    if (buttonContent === "SHARE A FACT") {
       setFormClass("fact-form");
       setButtonContent("CLOSE");
     } else {
@@ -23,7 +23,7 @@ export default function Header({ setFormClass }) {
             width="68"
             alt="Today I Learned Logo"
           />
-          <h1>Today I Learned</h1>
+          <h1>INSIGHTLY</h1>
         </div>
 
         <button className="btn btn-large btn-open" onClick={hideornot}>

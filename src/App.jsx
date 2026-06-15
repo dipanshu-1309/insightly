@@ -8,34 +8,44 @@ import supabase from "./supabase";
 import Loader from "./components/Loader";
 
 const CATEGORIES = [
-  { name: "technology", color: "#3b82f6" },
+  { name: "tech", color: "#3b82f6" },
   { name: "science", color: "#16a34a" },
-  { name: "finance", color: "#ef4444" },
-  { name: "society", color: "#eab308" },
-  { name: "entertainment", color: "#db2777" },
-  { name: "health", color: "#14b8a6" },
+  { name: "development", color: "#ef4444" },
+  { name: "culture", color: "#eab308" },
+  { name: "dance", color: "#db2777" },
+  { name: "fitness", color: "#14b8a6" },
   { name: "history", color: "#f97316" },
-  { name: "news", color: "#8b5cf6" },
+  { name: "trending", color: "#8b5cf6" },
 ];
 
 export default function App() {
   const [formClass, setFormClass] = useState("fact-form hidden");
   const [facts, setFacts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentCategory, setCurrentCategory] = useState("all");
 
   useEffect(() => {
     async function getFacts() {
       setIsLoading(true);
-      const { data: facts, error } = await supabase.from("facts").select("*");
+
+      let query = supabase.from("facts").select("*");
+
+      if (currentCategory !== "all")
+        query = query.eq("category", currentCategory);
+
+      const { data: facts, error } = await query
+        .order("created_at", { ascending: false })
+        .limit(1000);
+
       if (error) {
-        alert(error);
+        alert(`There was an error loading data. Error: ${error.message} `);
       }
 
       setFacts(facts);
       setIsLoading(false);
     }
     getFacts();
-  }, []);
+  }, [currentCategory]);
 
   return (
     <>
@@ -48,11 +58,14 @@ export default function App() {
         setFormClass={setFormClass}
       />
       <main className="main">
-        <CategoryFilters CATEGORIES={CATEGORIES} />
+        <CategoryFilters
+          CATEGORIES={CATEGORIES}
+          setCurrentCategory={setCurrentCategory}
+        />
         {isLoading ? (
           <Loader />
         ) : (
-          <FactList CATEGORIES={CATEGORIES} facts={facts} />
+          <FactList CATEGORIES={CATEGORIES} facts={facts} setFacts={setFacts} />
         )}
       </main>
     </>
