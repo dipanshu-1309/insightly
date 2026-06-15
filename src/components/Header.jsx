@@ -4,7 +4,7 @@ export default function Header({ showForm, setShowForm }) {
       <header className="header">
         <div className="logo">
           <img
-            src="/src/assets/logo.png"
+            src="/logo.png"
             height="68"
             width="68"
             alt="Today I Learned Logo"
